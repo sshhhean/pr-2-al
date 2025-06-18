@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class TextTransformer {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        scanner.close();
+
+        String transformedText = transformText(input);
+        System.out.println(transformedText);
+    }
+
+    private static String transformText(String text) {
+        StringBuilder result = new StringBuilder();
+        boolean isWordStart = true;
+
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+
+            if (Character.isLetter(currentChar)) {
+                if (isWordStart) {
+                    char firstLetter = currentChar;
+                    int j = i + 1;
+
+                    while (j < text.length() && Character.isLetter(text.charAt(j))) {
+                        result.append(text.charAt(j));
+                        j++;
+                    }
+
+                    result.append(firstLetter).append("ауч");
+                    i = j - 1;
+                    isWordStart = false;
+                } else {
+                    result.append(currentChar);
+                }
+            } else {
+                result.append(currentChar);
+                isWordStart = true;
+            }
+        }
+
+        return result.toString();
+    }
+}
