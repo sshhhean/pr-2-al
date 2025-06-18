@@ -1,0 +1,27 @@
+import java.util.Arrays;
+
+public class CityTrip {
+
+    public static int chooseBestSum(int maxDistance, int numCities, int[] distances) {
+        int n = distances.length;
+        int maxSum = -1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    int sum = distances[i] + distances[j] + distances[k];
+                    if (sum <= maxDistance && sum > maxSum) {
+                        maxSum = sum;
+                    }
+                }
+            }
+        }
+
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        int[] ts = {50, 55, 56, 57, 58, 60};
+        System.out.println(chooseBestSum(175, 3, ts)); 
+    }
+}
