@@ -1,0 +1,45 @@
+import java.math.BigInteger;
+
+public class FibonacciDigitFrequency {
+
+    public static void main(String[] args) {
+        int i = 10;
+        BigInteger fib = fibonacci(i);
+        System.out.println("F(" + i + ") = " + fib);
+
+        int[] digitCount = new int[10];
+        String numberStr = fib.toString();
+
+        for (char c : numberStr.toCharArray()) {
+            if (Character.isDigit(c)) {
+                digitCount[c - '0']++;
+            }
+        }
+
+        int maxFrequency = 0;
+        int mostFrequentDigit = 0;
+
+        for (int digit = 0; digit < 10; digit++) {
+            if (digitCount[digit] > maxFrequency || 
+                (digitCount[digit] == maxFrequency && digit > mostFrequentDigit)) {
+                maxFrequency = digitCount[digit];
+                mostFrequentDigit = digit;
+            }
+        }
+
+        System.out.println("Наиболее часто встречающаяся цифра: " + mostFrequentDigit);
+    }
+
+    private static BigInteger fibonacci(int n) {
+        BigInteger a = BigInteger.ZERO;
+        BigInteger b = BigInteger.ONE;
+
+        for (int i = 2; i <= n; i++) {
+            BigInteger temp = a.add(b);
+            a = b;
+            b = temp;
+        }
+
+        return b;
+    }
+}
