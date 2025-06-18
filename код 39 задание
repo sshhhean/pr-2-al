@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class JosephusGame {
+
+    public static void main(String[] args) {
+        int numberOfPlayers = 7;
+        int startPlayer = 1;
+
+        List<Integer> eliminatedPlayers = new ArrayList<>();
+        int winner = playJosephusGame(numberOfPlayers, startPlayer, eliminatedPlayers);
+
+        System.out.println("Список выбывших игроков: " + eliminatedPlayers);
+        System.out.println("Победитель: " + winner);
+    }
+
+    private static int playJosephusGame(int numberOfPlayers, int startPlayer, List<Integer> eliminatedPlayers) {
+        List<Integer> players = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            players.add(i);
+        }
+
+        int currentIndex = startPlayer - 1;
+
+        while (players.size() > 1) {
+            currentIndex = (currentIndex + 2) % players.size();
+            int eliminatedPlayer = players.remove(currentIndex);
+            eliminatedPlayers.add(eliminatedPlayer);
+        }
+
+        return players.get(0);
+    }
+}
