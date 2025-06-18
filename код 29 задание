@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Введите число n: ");
+        int n = scanner.nextInt();
+        
+        if (n <= 0 || n >= 100000) {
+            System.out.println("Число должно быть в диапазоне (0 < n < 100000).");
+            return;
+        }
+        
+        boolean isDifferenceOfSquares = false;
+        for (int i = 1; i * i < n; i++) {
+            int square1 = i * i;
+            int square2 = (i + 1) * (i + 1);
+            if (square2 - square1 == n) {
+                isDifferenceOfSquares = true;
+                break;
+            }
+        }
+        
+        if (isDifferenceOfSquares) {
+            System.out.println(n + " является разницей между двумя последовательными квадратами.");
+        } else {
+            System.out.println(n + " не является разницей между двумя последовательными квадратами.");
+        }
+        
+        scanner.close();
+    }
+}
