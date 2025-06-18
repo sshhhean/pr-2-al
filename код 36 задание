@@ -1,0 +1,71 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CaesarCipher {
+
+    public static void main(String[] args) {
+        try {
+            String text = fetchTextFromURL("https://fish-text.ru/get?number=10");
+            Map<Character, Integer> frequencyMap = buildFrequencyMap(text);
+
+            String originalText = "Привет, мир!";
+            int shift = 3;
+
+            String encryptedText = encrypt(originalText, shift);
+            System.out.println("Зашифрованный текст: " + encryptedText);
+
+            String decryptedText = decrypt(encryptedText, shift);
+            System.out.println("Расшифрованный текст: " + decryptedText);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+    }
+
+    private static String encrypt(String text, int shift) {
+        StringBuilder result = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isUpperCase(c) ? 'А' : 'а';
+                int shifted = ((c - base + shift) % 32 + 32) % 32 + base;
+                result.append((char) shifted);
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+
+    private static String decrypt(String text, int shift) {
+        return encrypt(text, -shift);
+    }
+
+    private static String fetchTextFromURL(String url) throws Exception {
+        URL website = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) website.openConnection();
+        connection.setRequestMethod("GET");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        connection.disconnect();
+        return response.toString();
+    }
+
+    private static Map<Character, Integer> buildFrequencyMap(String text) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (char c : text.toLowerCase().toCharArray()) {
+            if (c >= 'а' && c <= 'я') {
+                frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+            }
+        }
+        return frequencyMap;
+    }
