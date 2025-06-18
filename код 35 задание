@@ -1,0 +1,28 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class FitnessSort {
+
+    public static void main(String[] args) {
+        String input = "56 65 74 100 99 68 86 180 90";
+        String[] weights = input.split(" ");
+        Arrays.sort(weights, new Comparator<String>() {
+            @Override
+            public int compare(String a, String b) {
+                int sumA = calculateDigitSum(a);
+                int sumB = calculateDigitSum(b);
+                return Integer.compare(sumB, sumA); 
+            }
+        });
+
+        System.out.println(String.join(" ", weights));
+    }
+
+    private static int calculateDigitSum(String number) {
+        int sum = 0;
+        for (char c : number.toCharArray()) {
+            sum += Character.getNumericValue(c);
+        }
+        return sum;
+    }
+}
