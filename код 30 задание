@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Введите число: ");
+        int number = scanner.nextInt();
+        System.out.print("Введите степень: ");
+        int power = scanner.nextInt();
+        
+        if (number <= 0) {
+            System.out.println("Число должно быть положительным.");
+            return;
+        }
+        
+        int sumOfPowers = 0;
+        int temp = number;
+        while (temp > 0) {
+            int digit = temp % 10;
+            sumOfPowers += Math.pow(digit, power);
+            temp /= 10;
+        }
+        
+        boolean isPossible = false;
+        for (int i = 1; i <= number; i++) {
+            if (sumOfPowers == number * i) {
+                isPossible = true;
+                break;
+            }
+        }
+        
+        if (isPossible) {
+            System.out.println("Возможна ситуация: " + sumOfPowers + " = " + number + " * " + (sumOfPowers / number));
+        } else {
+            System.out.println("Такая ситуация невозможна.");
+        }
+        
+        scanner.close();
+    }
+}
