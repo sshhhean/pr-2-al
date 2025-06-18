@@ -1,0 +1,20 @@
+import java.math.BigInteger;
+
+public class StickGame {
+
+    public static void main(String[] args) {
+        BigInteger n = new BigInteger("1000000000000000000"); 
+
+        while (n.compareTo(BigInteger.ONE) > 0) {
+            if (n.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
+              
+                n = n.divide(BigInteger.valueOf(2));
+            } else {
+            
+                n = n.subtract(BigInteger.ONE);
+            }
+        }
+
+        System.out.println("Количество палочек у Тани: " + n);
+    }
+}
